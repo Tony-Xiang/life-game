@@ -1,7 +1,7 @@
 # life-game
 Really classical game which doens't need a player.
 
-## how to play
+## How to play
 Enter the size and enter the coordinates.
 
 ## Notice
