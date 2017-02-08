@@ -7,11 +7,11 @@ using namespace std;
 const int maxn = 1000;
 
 int confirmer;
-char Confirmer;
 int length = 140;
 int rule = 0;
 bool isalive[maxn + 2] = {};
 bool isalive_nexttime[maxn + 2] = {};
+bool isdup[256] = {};
 
 bool check_value(bool a, bool b, bool c, int rule);
 
@@ -23,20 +23,50 @@ void print();
 
 int main()
 {
+    cout<<"Random or not?\nEnter 1 for random, enter 2 for normal, enter other keys will quit.\n";
+    cin>>confirmer;
     system("clear");
-    for (rule = 0; rule <= 255; rule++)
+    if (confirmer == 1)
     {
-        for (int i = 1; i <= 140; i++)
-            isalive[i] = false;
-        isalive[length / 2] = true;
-        cout<<"Rule: "<<rule<<endl;
-        cout<<"--------------------------------------------------------------------------------------------------------------------------------------------\n";
-        print();
-        cout<<endl;
-        system("sleep 1.0");
-        system("clear");
+        for (int i = 0; i <= 255; i++)
+            isdup[i] = false;
+        srand(time(0));
+        while (rule <= 255)
+        {
+            int key = rand() % 256;
+            for (int i = 1; i <= 140; i++)
+                isalive[i] = false;
+            isalive[length / 2] = true;
+            if (!isdup[key])
+            {
+                cout<<"Rule: "<<key<<endl;
+                cout<<"--------------------------------------------------------------------------------------------------------------------------------------------\n";
+                print();
+                cout<<endl;
+                system("sleep 1.0");
+                system("clear");
+                rule++;
+            }
+        }
     }
-
+    else if (confirmer == 2)
+    {
+        for (rule = 0; rule <= 255; rule++)
+        {
+            int key = rand() % 256;
+            for (int i = 1; i <= 140; i++)
+                isalive[i] = false;
+            isalive[length / 2] = true;
+            cout<<"Rule: "<<rule<<endl;
+            cout<<"--------------------------------------------------------------------------------------------------------------------------------------------\n";
+            print();
+            cout<<endl;
+            system("sleep 1.0");
+            system("clear");
+        }
+    }
+    else
+        return 0;
     return 0;
 }
 
