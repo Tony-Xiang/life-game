@@ -10,3 +10,6 @@ It's not that raw now...
 Please remember that this game can be ONLY run on UNIX/linux systems.
 If you want to play it on windows, please recompile the file.
 The full version will come in the future...
+
+## Cellular automata
+Classical cellular automata, just complie and explore!
