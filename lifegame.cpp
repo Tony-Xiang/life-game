@@ -56,29 +56,28 @@ void basic_setup()
     if (Confirmer == 's')
     {
         // set length
+        length = 0;
         cout<<"Length: ";
-        while(!(cin>>length) || (length <= 0))
+        while ((!(cin>>length)) || (length <= 0) || (length > maxn))
         {
             cin.clear();
             while (cin.get() != '\n')
                 continue;
-            if (length <= 0)
-                cout<<"Out of range!\nPlease reenter a number: ";
+            if ((length <= 0) || (length > maxn))
+                cout<<"Wrong syntax or out of range!\nPlease enter/reenter a number: ";
             else
                 cout<<"Please enter a number: ";
         }
 
         // set width
+        width = 0;
         cout<<"Width: ";
-        while(!(cin>>width) || (width <= 0))
+        while ((!(cin>>width)) || ((width <= 0) || (width > maxn)))
         {
             cin.clear();
             while (cin.get() != '\n')
                 continue;
-            if (width <= 0)
-                cout<<"Out of range!\nPlease reenter a number: ";
-            else
-                cout<<"Please enter a number: ";
+            cout<<"Wrong syntax or out of range!\nPlease enter/reenter a number: ";
         }
     }
     else if (Confirmer == 'q')
@@ -89,36 +88,32 @@ void basic_setup()
     // basic setups, survive sum and newborn sum
     cout<<"Please enter the survive sum and the newborn sum of the block.\n"
         <<"The default number of the survive sum is 2.\nThe default number of the newborn sum is 3.\n"
+        <<"The max number of the survive sum is 8.\nThe max number of the newborn sum is 8.\n"
         <<"Press 's' for setup, 'q' for quit, and any other key will be regarded as default.\n";
 
     cin>>Confirmer;
     if (Confirmer == 's')
     {
-
         // set survive sum
+        survive_sum = 0;
         cout<<"Survive sum: ";
-        while(!(cin>>survive_sum) || (survive_sum <= 0))
+        while ((!(cin>>survive_sum)) || ((survive_sum <= 0) || (survive_sum > 8)))
         {
             cin.clear();
             while (cin.get() != '\n')
                 continue;
-            if (survive_sum <= 0)
-                cout<<"Out of range!\nPlease reenter a number: ";
-            else
-                cout<<"Please enter a number: ";
+            cout<<"Wrong syntax or out of range!\nPlease enter/reenter a number: ";
         }
 
         // set newborn sum
+        newborn_sum = 0;
         cout<<"Newborn sum: ";
-        while(!(cin>>newborn_sum) || (newborn_sum <= 0))
+        while ((!(cin>>newborn_sum)) || ((newborn_sum <= 0) || (newborn_sum > 8)))
         {
             cin.clear();
             while (cin.get() != '\n')
                 continue;
-            if (newborn_sum <= 0)
-                cout<<"Out of range!\nPlease reenter a number: ";
-            else
-                cout<<"Please enter a number: ";
+            cout<<"Wrong syntax or out of range!\nPlease enter/reenter a number: ";
         }
     }
     else if (Confirmer == 'q')
@@ -218,7 +213,7 @@ void verbose_random_setup(int length, int width, int choice)
 
             if (choice == 2)
             {
-                system("sleep 0.2");
+                system("sleep 0.08");
                 cout<<"Random live "<<counter<<": ("<<x<<", "<<y<<")\n";
             }
         }
@@ -269,10 +264,10 @@ void update(int length, int width)
 
 void print(int length, int width)
 {
-    for (int i = 1; i <= length; i++)
+    for (int i = 1; i <= width; i++)
     {
-        for (int j = 1; j <= width; j++)
-            if (isalive[i][j])
+        for (int j = 1; j <= length; j++)
+            if (isalive[j][i])
                 cout<<"*";
             else
                 cout<<" ";
@@ -282,16 +277,35 @@ void print(int length, int width)
 
 void print()
 {
-    print(length, width);
-    system("sleep 0.1");
+    int loop = 1;
+    int limit = 0;
 
-    // need to be improved here.
+    // need to be improved here
 
-    while (1)
+    cout<<"Please enter the limit of the loop.\nIf you do not enter a number, it will loop forever.\n";
+    if (!(cin>>limit))
     {
-        update(length, width);
-        system("clear");
         print(length, width);
         system("sleep 0.1");
+        while (1)
+        {
+            update(length, width);
+            system("clear");
+            print(length, width);
+            system("sleep 0.1");
+        }
+    }
+    else
+    {
+        print(length, width);
+        system("sleep 0.1");
+        while (loop < limit)
+        {
+            update(length, width);
+            system("clear");
+            print(length, width);
+            system("sleep 0.1");
+            loop++;
+        }
     }
 }
